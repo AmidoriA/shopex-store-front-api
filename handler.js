@@ -1,5 +1,6 @@
 'use strict';
 
+const ItemController = require('./Controllers/ItemController');
 const ItemService = require('./Services/ItemService');
 
 const formatAndReturn = (statusCode, data) => {
@@ -51,3 +52,13 @@ module.exports.getItem = async (event, context) => {
 
   return formatAndReturn(200, itemData);
 };
+
+module.exports.getItemFull = async (event, context) => {
+  const itemID = event.pathParameters.itemID;
+  
+  // Use ItemService to fetch item data
+  const itemData = await ItemController.getItem(itemID);
+
+  return formatAndReturn(200, itemData);
+};
+
