@@ -83,6 +83,13 @@ functions:
           path: items/test
           method: get
           cors: true
+  getItemTest2:
+    handler: handler.getItemTest2
+    events:
+      - http:
+          path: items/test2
+          method: get
+          cors: true
   getItemSingle:
     handler: handler.getItem
     events:
