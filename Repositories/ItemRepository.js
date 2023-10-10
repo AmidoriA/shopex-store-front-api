@@ -1,29 +1,24 @@
+const DatabaseHelper = require('../Helpers/DatabaseHelper');
+
 class ItemRepository {
     static async getItem(itemID) {
-        // Fetch the item data from a database or other data source here.
-        // For this example, we're returning hard-coded data.
-        return {
-            id: itemID,
-            name: 'Sample Item',
-            description: 'This is a sample item',
-        };
+        try {
+            return await DatabaseHelper.getData('SELECT * FROM items WHERE id = ?', itemID, true);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     static async getBundles(itemID) {
-        // Fetch the item data from a database or other data source here.
-        // For this example, we're returning hard-coded data.
-        return [
-            {
-                id: 111,
-                name: 'first bundle',
-                description: 'This is a first sample bundle',
-            },
-            {
-                id: 222,
-                name: 'second bundle',
-                description: 'This is a second sample bundle',
-            }
-        ]
+        try {
+            return await DatabaseHelper.getData(
+                "SELECT bundles.* FROM bundles \
+                 INNER JOIN bundle_items ON bundle_items.bundle_id = bundles.id \
+                 AND bundle_items.item_id = ?"
+            , itemID);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
   
