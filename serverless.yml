@@ -29,6 +29,16 @@ provider:
   stage: dev
   region: ap-southeast-1
 
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ec2:CreateNetworkInterface
+            - ec2:DescribeNetworkInterfaces
+            - ec2:DeleteNetworkInterface
+          Resource: "*"
+
   # you can define service wide environment variables here
   environment:
     STORE_DB_NAME: ${param:STORE_DB_NAME}
