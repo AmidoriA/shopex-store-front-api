@@ -29,6 +29,14 @@ provider:
   stage: dev
   region: ap-southeast-1
 
+  vpc:
+    securityGroupIds:
+      - ${param:VPC_SG}
+    subnetIds:
+      - ${param:VPC_SUBNET_1}
+      - ${param:VPC_SUBNET_2}
+      - ${param:VPC_SUBNET_3}
+
   iam:
     role:
       statements:
