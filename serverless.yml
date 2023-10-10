@@ -66,6 +66,13 @@ provider:
 #    - include-me-dir/**
 
 functions:
+  getItemTest:
+    handler: handler.getItemTest
+    events:
+      - http:
+          path: items/test
+          method: get
+          cors: true
   getItemSingle:
     handler: handler.getItem
     events:
@@ -80,6 +87,7 @@ functions:
           path: items/{itemID}/full
           method: get
           cors: true
+
 
   hello:
     handler: handler.hello

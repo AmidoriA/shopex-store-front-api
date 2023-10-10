@@ -62,3 +62,10 @@ module.exports.getItemFull = async (event, context) => {
   return formatAndReturn(200, itemData);
 };
 
+module.exports.getItemTest = async (event, context) => {
+  // Use ItemService to fetch item data
+  const itemData = await ItemService.getItem(1);
+
+  return formatAndReturn(200, itemData);
+};
+
