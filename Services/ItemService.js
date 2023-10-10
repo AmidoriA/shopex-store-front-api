@@ -1,16 +1,10 @@
-// Services/ItemService.js
+const ItemRepository = require('../Repositories/ItemRepository');
 
 class ItemService {
     static async getItem(itemID) {
-      // Fetch the item data from a database or other data source here.
-      // For this example, we're returning hard-coded data.
-      return {
-        id: itemID,
-        name: 'Sample Item',
-        description: 'This is a sample item',
-      };
+      return await ItemRepository.getItem(itemID);
     }
-  }
+}
   
-  module.exports = ItemService;
+module.exports = ItemService;
   

@@ -20,14 +20,22 @@ org: amio2sxjp
 # Check out our docs for more details
 frameworkVersion: "3"
 
+plugins:
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs18.x
   stage: dev
   region: ap-southeast-1
 
-plugins:
-  - serverless-offline
+  # you can define service wide environment variables here
+  environment:
+    STORE_DB_NAME: ${param:STORE_DB_NAME}
+    STORE_DB_PASSWORD: ${param:STORE_DB_PASSWORD}
+    STORE_DB_HOST: ${param:STORE_DB_HOST}
+    STORE_DB_PORT: ${param:STORE_DB_PORT}
+    STORE_DB_USER: ${param:STORE_DB_USER}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
@@ -47,9 +55,7 @@ plugins:
 #                - "Ref" : "ServerlessDeploymentBucket"
 #                - "/*"
 
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+
 
 # you can add packaging information here
 #package:
@@ -60,11 +66,18 @@ plugins:
 #    - include-me-dir/**
 
 functions:
-  getItem:
+  getItemSingle:
     handler: handler.getItem
     events:
       - http:
           path: items/{itemID}
+          method: get
+          cors: true
+  getItem:
+    handler: handler.getItemFull
+    events:
+      - http:
+          path: items/{itemID}/full
           method: get
           cors: true
 
