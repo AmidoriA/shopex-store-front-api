@@ -5,6 +5,7 @@ const connection = mysql.createConnection({
     user: process.env.STORE_DB_USER,
     password: process.env.STORE_DB_PASSWORD,
     database: process.env.STORE_DB_NAME,
+    connectTimeout: 1000 // 1 second
 });
 
 class DatabaseHelper {
