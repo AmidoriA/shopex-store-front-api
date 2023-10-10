@@ -47,7 +47,7 @@ module.exports.getItem = async (event, context) => {
   const itemID = event.pathParameters.itemID;
   
   // Use ItemService to fetch item data
-  const itemData = await ItemService.getItemById(itemID);
+  const itemData = await ItemService.getItem(itemID);
 
   return formatAndReturn(200, itemData);
 };

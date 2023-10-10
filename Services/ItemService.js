@@ -1,7 +1,7 @@
 // Services/ItemService.js
 
 class ItemService {
-    static async getItemById(itemID) {
+    static async getItem(itemID) {
       // Fetch the item data from a database or other data source here.
       // For this example, we're returning hard-coded data.
       return {
