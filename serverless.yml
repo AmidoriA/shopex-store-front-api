@@ -86,6 +86,7 @@ provider:
 functions:
   getItemTest:
     handler: handler.getItemTest
+    memorySize: 128
     events:
       - http:
           path: items/test
@@ -93,6 +94,7 @@ functions:
           cors: true
   getItemTest2:
     handler: handler.getItemTest2
+    memorySize: 128
     events:
       - http:
           path: items/test2
@@ -100,6 +102,7 @@ functions:
           cors: true
   getItemSingle:
     handler: handler.getItem
+    memorySize: 128
     events:
       - http:
           path: items/{itemID}
@@ -107,6 +110,7 @@ functions:
           cors: true
   getItem:
     handler: handler.getItemFull
+    memorySize: 128
     events:
       - http:
           path: items/{itemID}/full
@@ -116,6 +120,7 @@ functions:
 
   hello:
     handler: handler.hello
+    memorySize: 128
     events:
       - http:
           path: hello
