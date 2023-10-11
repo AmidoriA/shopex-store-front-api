@@ -95,13 +95,13 @@ provider:
 
 functions:
   googleAuthUrl:
-    handler: handler.googleAuthUrl
+    handler: handlerGoogle.googleAuthUrl
     events:
       - http:
           path: auth/google/authUrl
           method: get
   googleAuthCallback:
-    handler: handler.googleAuthCallback
+    handler: handlerGoogle.googleAuthCallback
     events:
       - http:
           path: auth/google/callback
