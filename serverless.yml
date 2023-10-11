@@ -106,6 +106,12 @@ functions:
       - http:
           path: auth/google/callback
           method: get
+  googleAuthCallbackTest:
+    handler: handlerGoogle.googleAuthCallbackTest
+    events:
+      - http:
+          path: auth/google/callback-test
+          method: get
   secureEndpoint:
     handler: handler.secureEndpoint
 
