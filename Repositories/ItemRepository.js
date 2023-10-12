@@ -1,11 +1,18 @@
 const DatabaseHelper = require('../Helpers/DatabaseHelper');
 
 class ItemRepository {
-    constructor(ItemModel) {
+    constructor(ItemModel, BundleModel, BundleItemModel) {
         this.Item = ItemModel;
+        this.Bundle = BundleModel;
+        this.BundleItem = BundleItemModel;
+
+        this.Item.belongsToMany(this.Bundle, { through: this.BundleItem,
+            underscored: true });
+        this.Bundle.belongsToMany(this.Item, { through: this.BundleItem,
+            underscored: true });
     }
 
-    async findById(id) {
+    async find(id) {
         return await this.Item.findByPk(id);
     }
 
@@ -16,6 +23,13 @@ class ItemRepository {
     //         console.log(error);
     //     }
     // }
+
+    async findFull(itemId) {
+        const item = await this.Item.findByPk(itemId, {
+          include: this.Bundle
+        });
+        return item;
+    }
 
     static async getBundles(itemID) {
         try {
