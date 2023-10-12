@@ -16,31 +16,11 @@ class ItemRepository {
         return await this.Item.findByPk(id);
     }
 
-    // static async getItem(itemID) {
-    //     try {
-    //         return await DatabaseHelper.getData('SELECT * FROM items WHERE id = ?', itemID, true);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
     async findFull(itemId) {
         const item = await this.Item.findByPk(itemId, {
           include: this.Bundle
         });
         return item;
-    }
-
-    static async getBundles(itemID) {
-        try {
-            return await DatabaseHelper.getData(
-                "SELECT bundles.* FROM bundles \
-                 INNER JOIN bundle_items ON bundle_items.bundle_id = bundles.id \
-                 AND bundle_items.item_id = ?"
-            , itemID);
-        } catch (error) {
-            console.log(error);
-        }
     }
 }
   

@@ -47,7 +47,7 @@ module.exports.googleAuthUrl = async (event, context) => {
 };
 
 module.exports.googleAuthCallbackTest = async () => {
-    googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","locale":"en"}};
+    const googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","locale":"en"}};
 
     const jwt = await GoogleUserService.retriveJwt(googleUser);
 
@@ -55,7 +55,7 @@ module.exports.googleAuthCallbackTest = async () => {
     // user = await GoogleUserRepository.getUser(googleUser);
     // console.log(user);
 
-    result = jwt;
+    const result = jwt;
     return formatAndReturn(200, result);
 }
 
