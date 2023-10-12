@@ -1,5 +1,3 @@
-const DatabaseHelper = require('../Helpers/DatabaseHelper');
-
 class ItemRepository {
     constructor(ItemModel, BundleModel, BundleItemModel) {
         this.Item = ItemModel;

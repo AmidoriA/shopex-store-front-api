@@ -1,5 +1,3 @@
-const DatabaseHelper = require('../Helpers/DatabaseHelper');
-
 class GoogleUserRepository {
 
     constructor(UserModel) {
