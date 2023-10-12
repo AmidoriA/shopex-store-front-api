@@ -25,11 +25,6 @@ module.exports.googleAuthCallbackTest = async () => {
     const googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"emails":[{"value":"ami.o2sx@gmail.com","verified":true}],"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"email\": \"ami.o2sx@gmail.com\",\n  \"email_verified\": true,\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","email":"ami.o2sx@gmail.com","email_verified":true,"locale":"en"}};
     
     const jwt = await googleUserService.retriveJwt(googleUser);
-
-    // console.log(googleUser);
-    // user = await GoogleUserRepository.getUser(googleUser);
-    // console.log(user);
-
     const result = jwt;
     return formatAndReturn(200, result);
 }
@@ -50,29 +45,24 @@ module.exports.googleAuthUrl = async (event, context) => {
 
 
 
-module.exports.googleAuthCallback = (event, context, callback) => {
+module.exports.googleAuthCallback = async (event, context) => {
     context.callbackWaitsForEmptyEventLoop = false;  // Important to add this for Passport
   
-    const authenticate = passport.authenticate('google', { session: false }, (error, googleUser) => {
-      if (error) {
-        callback(null, {
-          statusCode: 401,
-          body: JSON.stringify({ error: 'Authentication failed' }),
+    const authenticate = (req, res) => {
+        return new Promise((resolve, reject) => {
+            passport.authenticate('google', { session: false }, (error, googleUser) => {
+                if (error) {
+                    console.log(error);
+                    reject({ statusCode: 401, body: { error: 'Authentication failed' } });
+                } else if (!googleUser) {
+                    reject({ statusCode: 401, body: { error: 'Authentication failed' } });
+                } else {
+                    // User is successfully authenticated
+                    resolve({ statusCode: 200, body: googleUser });
+                }
+            })(req, res);
         });
-      } else if (!googleUser) {
-        callback(null, {
-          statusCode: 401,
-          body: JSON.stringify({ error: 'Authentication failed' }),
-        });
-      } else {
-        // User is successfully authenticated
-        // Now you can use the `user` object to generate JWT or do other tasks
-        callback(null, {
-          statusCode: 200,
-          body: JSON.stringify(googleUser),  // Just sending the user data for this example
-        });
-      }
-    });
+    };
   
     // Create fake Express request and response objects and apply them to Passport
     const req = {
@@ -81,5 +71,13 @@ module.exports.googleAuthCallback = (event, context, callback) => {
     };
     const res = {};
   
-    authenticate(req, res);
+    const authResult = await authenticate(req, res);
+    if (authResult.statusCode !== 200) {
+        return formatAndReturn(authResult.statusCode, authResult.body);
+    }
+
+    const jwt = await googleUserService.retriveJwt(authResult.body);
+    const result = jwt;
+    return formatAndReturn(200, result);
+    
 };
