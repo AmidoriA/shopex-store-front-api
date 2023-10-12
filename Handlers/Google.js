@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = '1234';
 const GoogleUserService = require('../Services/GoogleUserService');
 const GoogleUserRepository = require('../Repositories/GoogleUserRepository');
+const { formatAndReturn } = require('../Helpers/Functions');
+
+const sequelize = require('../Helpers/Sequelize');
+const googleUserService = new GoogleUserService(sequelize);
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -17,20 +21,18 @@ passport.use(new GoogleStrategy({
 }
 ));
 
-const formatAndReturn = (statusCode, data) => {
-    return {
-      statusCode: statusCode,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify(data),
-    }; 
-};
-  
-module.exports.formatAndReturn = formatAndReturn;
-  
+module.exports.googleAuthCallbackTest = async () => {
+    const googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","locale":"en"}};
 
+    const jwt = await googleUserService.retriveJwt(googleUser);
+
+    // console.log(googleUser);
+    // user = await GoogleUserRepository.getUser(googleUser);
+    // console.log(user);
+
+    const result = jwt;
+    return formatAndReturn(200, result);
+}
 
 module.exports.googleAuthUrl = async (event, context) => {
     context.callbackWaitsForEmptyEventLoop = false;  // Important to add this for Passport
@@ -46,18 +48,7 @@ module.exports.googleAuthUrl = async (event, context) => {
     return formatAndReturn(200, {url: loginURL});
 };
 
-module.exports.googleAuthCallbackTest = async () => {
-    const googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","locale":"en"}};
 
-    const jwt = await GoogleUserService.retriveJwt(googleUser);
-
-    // console.log(googleUser);
-    // user = await GoogleUserRepository.getUser(googleUser);
-    // console.log(user);
-
-    const result = jwt;
-    return formatAndReturn(200, result);
-}
 
 module.exports.googleAuthCallback = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;  // Important to add this for Passport

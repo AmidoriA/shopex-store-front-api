@@ -1,34 +1,24 @@
 const DatabaseHelper = require('../Helpers/DatabaseHelper');
 
 class GoogleUserRepository {
+
+    constructor(UserModel) {
+        this.User = UserModel;
+    }
     
-    static async getUser(googleUser) {
-        try {
-            return await DatabaseHelper.getData('SELECT * FROM users WHERE google_id = ?', googleUser.id, true);
-        } catch (error) {
-            console.log(error);
-        }
+    async getUser(googleUser) {
+        return await this.User.findByPk(2);
+        return await this.User.findOne({ where: {google_id: googleUser.id} });
     }
 
-    static async createUser(googleUser) {
-        try {
-            await DatabaseHelper.writeRaw(
-                'INSERT INTO users (google_id, email, first_name, last_name, profile_picture) VALUES ?',
-                [
-                    [
-                        googleUser.id,
-                        '',
-                        googleUser.name.givenName,
-                        googleUser.name.familyName,
-                        googleUser.photos[0].value
-                    ]
-                ]
-            );
-
-            return await DatabaseHelper.getData('SELECT * FROM users WHERE google_id = ?', googleUser.id, true);
-        } catch (error) {
-            console.log(error);
-        }
+    async createUser(googleUser) {
+        return await this.User.create({
+            google_id: googleUser.id,
+            email: '',
+            first_name: googleUser.name.givenName,
+            last_name: googleUser.name.familyName,
+            profile_picture: googleUser.photos[0].value
+        });
     }
 }
   

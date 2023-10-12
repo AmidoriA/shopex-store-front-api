@@ -1,12 +1,20 @@
+'use strict';
+
 const GoogleUserRepository = require('../Repositories/GoogleUserRepository');
 const jwt = require('jsonwebtoken');
+const UserModel = require('../Models/UserModel');
 
 class GoogleUserService {
-    static async retriveJwt(googleUser) {
+    constructor(sequelize) {
+        const User = UserModel(sequelize);
+        this.googleUserRepository = new GoogleUserRepository(User);
+    }
+
+    async retriveJwt(googleUser) {
         const JWT_SECRET = 1234;
-        let user = await GoogleUserRepository.getUser(googleUser);
+        let user = await this.googleUserRepository.getUser(googleUser);
         if (user == undefined) {
-            user = await GoogleUserRepository.createUser(googleUser);
+            user = await this.googleUserRepository.createUser(googleUser);
         }
         return user;
         // return jwt.sign(user, JWT_SECRET);
