@@ -95,28 +95,29 @@ provider:
 
 functions:
   googleAuthUrl:
-    handler: handlerGoogle.googleAuthUrl
+    handler: Handlers/Google.googleAuthUrl
     events:
       - http:
           path: auth/google/authUrl
           method: get
   googleAuthCallback:
-    handler: handlerGoogle.googleAuthCallback
+    handler: Handlers/Google.googleAuthCallback
     events:
       - http:
           path: auth/google/callback
           method: get
   googleAuthCallbackTest:
-    handler: handlerGoogle.googleAuthCallbackTest
+    handler: Handlers/Google.googleAuthCallbackTest
     events:
       - http:
           path: auth/google/callback-test
           method: get
+
   secureEndpoint:
-    handler: handler.secureEndpoint
+    handler: Handlers/Task.secureEndpoint
 
   getItemTest:
-    handler: handler.getItemTest
+    handler: Handlers/Hello.getItemTest
     memorySize: 128
     events:
       - http:
@@ -124,23 +125,23 @@ functions:
           method: get
           cors: true
   getItemTest2:
-    handler: handler.getItemTest2
+    handler: Handlers/Hello.getItemTest2
     memorySize: 128
     events:
       - http:
           path: items/test2
           method: get
           cors: true
-  getItemSingle:
-    handler: handler.getItem
+  getItem:
+    handler: Handlers/Task.getItem
     memorySize: 128
     events:
       - http:
           path: items/{itemID}
           method: get
           cors: true
-  getItem:
-    handler: handler.getItemFull
+  getItemFull:
+    handler: Handlers/Task.getItemFull
     memorySize: 128
     events:
       - http:
@@ -148,9 +149,8 @@ functions:
           method: get
           cors: true
 
-
   hello:
-    handler: handler.hello
+    handler: Handlers/Hello.hello
     memorySize: 128
     events:
       - http:

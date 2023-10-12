@@ -1,9 +1,11 @@
+'use strict';
+
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = '1234';
-const GoogleUserService = require('./Services/GoogleUserService');
-const GoogleUserRepository = require('./Repositories/GoogleUserRepository');
+const GoogleUserService = require('../Services/GoogleUserService');
+const GoogleUserRepository = require('../Repositories/GoogleUserRepository');
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
