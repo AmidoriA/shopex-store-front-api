@@ -2,6 +2,18 @@
 
 const ItemController = require('./Controllers/ItemController');
 const ItemService = require('./Services/ItemService');
+const ItemRepository = require('./Repositories/ItemRepository');
+const ItemModel = require('./Models/ItemModel');
+
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize('shopex', 'root', '12345678', {
+  host: 'localhost',
+  dialect: 'mysql',
+});
+
+const Item = ItemModel(sequelize);
+const itemRepository = new ItemRepository(Item);
 
 const formatAndReturn = (statusCode, data) => {
   return {
@@ -48,7 +60,8 @@ module.exports.getItem = async (event, context) => {
   const itemID = event.pathParameters.itemID;
   
   // Use ItemService to fetch item data
-  const itemData = await ItemService.getItem(itemID);
+  // const itemData = await ItemService.getItem(itemID);
+  const itemData = await itemRepository.findById(itemID);
 
   return formatAndReturn(200, itemData);
 };

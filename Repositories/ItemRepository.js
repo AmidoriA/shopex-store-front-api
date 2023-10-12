@@ -1,13 +1,21 @@
 const DatabaseHelper = require('../Helpers/DatabaseHelper');
 
 class ItemRepository {
-    static async getItem(itemID) {
-        try {
-            return await DatabaseHelper.getData('SELECT * FROM items WHERE id = ?', itemID, true);
-        } catch (error) {
-            console.log(error);
-        }
+    constructor(ItemModel) {
+        this.Item = ItemModel;
     }
+
+    async findById(id) {
+        return await this.Item.findByPk(id);
+    }
+
+    // static async getItem(itemID) {
+    //     try {
+    //         return await DatabaseHelper.getData('SELECT * FROM items WHERE id = ?', itemID, true);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     static async getBundles(itemID) {
         try {
