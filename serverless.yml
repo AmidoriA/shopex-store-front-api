@@ -113,6 +113,22 @@ functions:
           path: auth/google/callback-test
           method: get
 
+  dnsTest:
+    handler: Handlers/Hello.dns
+    events:
+      - http:
+          path: dns/test
+          method: get
+          cors: true
+
+  internetTest:
+    handler: Handlers/Hello.internet
+    events:
+      - http:
+          path: internet/test
+          method: get
+          cors: true
+
   secureEndpoint:
     handler: Handlers/Item.secureEndpoint
 

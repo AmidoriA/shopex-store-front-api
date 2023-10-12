@@ -13,6 +13,34 @@ const Bundle = BundleModel(sequelize);
 const BundleItem = BundleItemModel(sequelize);
 const itemRepository = new ItemRepository(Item, Bundle, BundleItem);
 
+const dns = require('dns');
+const axios = require('axios');
+
+module.exports.dns = async (event) => {
+  return new Promise((resolve, reject) => {
+    dns.resolve('www.google.com', (err, addresses) => {
+      if (err) {
+        console.error('DNS resolution failed:', err);
+        reject(new Error('DNS resolution failed'));
+      } else {
+        console.log('DNS resolution addresses:', addresses);
+        resolve('DNS resolution succeeded');
+      }
+    });
+  });
+};
+
+module.exports.internet = async (event) => {
+  try {
+    const response = await axios.get('https://www.google.com');
+    console.log('Internet access succeeded:', response.status);
+    return 'Internet access succeeded';
+  } catch (error) {
+    console.error('Internet access failed:', error);
+    return 'Internet access failed';
+  }
+};
+
 module.exports.hello = async (event) => {
     return formatAndReturn(200, {
         message: 'Go Serverless v1.0! Your function executed successfully!',
