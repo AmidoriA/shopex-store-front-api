@@ -13,8 +13,6 @@ const Bundle = BundleModel(sequelize);
 const BundleItem = BundleItemModel(sequelize);
 const itemRepository = new ItemRepository(Item, Bundle, BundleItem);
 
-
-
 module.exports.getItem = async (event, context) => {
   const itemID = event.pathParameters.itemID;
   

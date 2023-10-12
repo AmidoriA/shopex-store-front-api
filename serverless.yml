@@ -114,7 +114,7 @@ functions:
           method: get
 
   secureEndpoint:
-    handler: Handlers/Task.secureEndpoint
+    handler: Handlers/Item.secureEndpoint
 
   getItemTest:
     handler: Handlers/Hello.getItemTest
@@ -133,7 +133,7 @@ functions:
           method: get
           cors: true
   getItem:
-    handler: Handlers/Task.getItem
+    handler: Handlers/Item.getItem
     memorySize: 128
     events:
       - http:
@@ -141,7 +141,7 @@ functions:
           method: get
           cors: true
   getItemFull:
-    handler: Handlers/Task.getItemFull
+    handler: Handlers/Item.getItemFull
     memorySize: 128
     events:
       - http:
