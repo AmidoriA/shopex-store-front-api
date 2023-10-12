@@ -22,8 +22,8 @@ passport.use(new GoogleStrategy({
 ));
 
 module.exports.googleAuthCallbackTest = async () => {
-    const googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","locale":"en"}};
-
+    const googleUser = {"id":"107068599269702968028","displayName":"Tan Thanchirasuk","name":{"familyName":"Thanchirasuk","givenName":"Tan"},"emails":[{"value":"ami.o2sx@gmail.com","verified":true}],"photos":[{"value":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c"}],"provider":"google","_raw":"{\n  \"sub\": \"107068599269702968028\",\n  \"name\": \"Tan Thanchirasuk\",\n  \"given_name\": \"Tan\",\n  \"family_name\": \"Thanchirasuk\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc\\u003ds96-c\",\n  \"email\": \"ami.o2sx@gmail.com\",\n  \"email_verified\": true,\n  \"locale\": \"en\"\n}","_json":{"sub":"107068599269702968028","name":"Tan Thanchirasuk","given_name":"Tan","family_name":"Thanchirasuk","picture":"https://lh3.googleusercontent.com/a/ACg8ocKZCyCK5kiaGgzuGNlfy2mr8f4EQb4KrafpfzoICQnCxfNc=s96-c","email":"ami.o2sx@gmail.com","email_verified":true,"locale":"en"}};
+    
     const jwt = await googleUserService.retriveJwt(googleUser);
 
     // console.log(googleUser);
@@ -40,7 +40,7 @@ module.exports.googleAuthUrl = async (event, context) => {
     const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const redirectUri = `${process.env.ROOT_URL}/${process.env.STAGE}/auth/google/callback`;
-    const scope = 'https://www.googleapis.com/auth/plus.login';
+    const scope = 'profile email';
     // const scope = 'https://www.googleapis.com/auth/userinfo.profile';
   
     const loginURL = `${googleAuthUrl}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
