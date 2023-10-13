@@ -58,8 +58,6 @@ provider:
     STORE_DB_USER: ${param:STORE_DB_USER}
 
     ROOT_URL: ${param:ROOT_URL}
-    GOOGLE_CLIENT_ID: ${param:GOOGLE_CLIENT_ID}
-    GOOGLE_CLIENT_SECRET: ${param:GOOGLE_CLIENT_SECRET}
 
     STAGE: ${self:provider.stage}
     JWT_SECRET: ${param:JWT_SECRET}
@@ -91,26 +89,6 @@ provider:
 #    - '!exclude-me-dir/**'
 #    - include-me.js
 #    - include-me-dir/**
-
-functions:
-  googleAuthUrl:
-    handler: Handlers/Google.googleAuthUrl
-    events:
-      - http:
-          path: auth/google/authUrl
-          method: get
-  googleAuthCallback:
-    handler: Handlers/Google.googleAuthCallback
-    events:
-      - http:
-          path: auth/google/callback
-          method: get
-  googleAuthCallbackTest:
-    handler: Handlers/Google.googleAuthCallbackTest
-    events:
-      - http:
-          path: auth/google/callback-test
-          method: get
 
   dnsTest:
     handler: Handlers/Hello.dns
