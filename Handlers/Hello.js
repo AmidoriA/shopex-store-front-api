@@ -2,7 +2,7 @@
 
 const sequelize = require('../Helpers/Sequelize');
 const { formatAndReturn } = require('../Helpers/Functions');
-const jwt = require('jsonwebtoken');
+const { getUser, getUserFromEvent } = require('../Helpers/Auth');
 
 const ItemRepository = require('../Repositories/ItemRepository');
 const ItemModel = require('../Models/ItemModel');
@@ -64,19 +64,17 @@ module.exports.getItemTest2 = async (event, context) => {
 };
 
 module.exports.authorized = async (event) => {
-  const token = event.headers.Authorization.split(' ')[1];
+  const verified = getUserFromEvent(event);
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // Perform authorized action here
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Authorized', body: decoded })
-    };
-  } catch (error) {
+  if (verified.statusCode != 200) {
     return {
       statusCode: 401,
-      body: JSON.stringify({ error: 'Unauthorized' })
+      body: JSON.stringify({ error: verified.error })
     };
   }
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ user: verified.user })
+  };
 };
