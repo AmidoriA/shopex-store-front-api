@@ -19,13 +19,21 @@ getUser = (token) => {
 
 getUserFromEvent = (event) => {
     if (event.headers.Authorization == undefined) {
-        return null;
+        return {
+            statusCode: 400,
+            error: 'Missing authorization header',
+            user: null
+        };
     }
 
     const splited = event.headers.Authorization.split(' ');
 
     if (splited.length < 2) {
-        return null;
+        return {
+            statusCode: 400,
+            error: 'Invalid authorization header',
+            user: null
+        };
     }
 
     return getUser(splited[1]);
