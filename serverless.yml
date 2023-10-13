@@ -90,6 +90,7 @@ provider:
 #    - include-me.js
 #    - include-me-dir/**
 
+functions:
   dnsTest:
     handler: Handlers/Hello.dns
     events:
