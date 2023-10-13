@@ -16,8 +16,20 @@ class GoogleUserService {
         if (user == undefined) {
             user = await this.googleUserRepository.createUser(googleUser);
         }
-        return user;
-        // return jwt.sign(user, JWT_SECRET);
+        const token = jwt.sign(
+            {
+                id: user.id,
+                google_id: user.google_id,
+                email: user.email,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                profile_picture: user.profile_picture,
+            }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
+
+        return token;
     }
 }
   

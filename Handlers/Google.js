@@ -2,10 +2,7 @@
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = '1234';
 const GoogleUserService = require('../Services/GoogleUserService');
-const GoogleUserRepository = require('../Repositories/GoogleUserRepository');
 const { formatAndReturn } = require('../Helpers/Functions');
 
 const sequelize = require('../Helpers/Sequelize');
@@ -76,8 +73,8 @@ module.exports.googleAuthCallback = async (event, context) => {
         return formatAndReturn(authResult.statusCode, authResult.body);
     }
 
-    const jwt = await googleUserService.retriveJwt(authResult.body);
-    const result = jwt;
-    return formatAndReturn(200, result);
-    
+    const token = await googleUserService.retriveJwt(authResult.body);
+    return formatAndReturn(200, {
+        token: token
+    });
 };

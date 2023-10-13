@@ -62,6 +62,7 @@ provider:
     GOOGLE_CLIENT_SECRET: ${param:GOOGLE_CLIENT_SECRET}
 
     STAGE: ${self:provider.stage}
+    JWT_SECRET: ${param:JWT_SECRET}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
@@ -115,7 +116,7 @@ functions:
     handler: Handlers/Hello.dns
     events:
       - http:
-          path: dns/test
+          path: test/dns
           method: get
           cors: true
 
@@ -123,7 +124,15 @@ functions:
     handler: Handlers/Hello.internet
     events:
       - http:
-          path: internet/test
+          path: test/internet
+          method: get
+          cors: true
+
+  authorizedTest:
+    handler: Handlers/Hello.authorized
+    events:
+      - http:
+          path: test/authorized
           method: get
           cors: true
 

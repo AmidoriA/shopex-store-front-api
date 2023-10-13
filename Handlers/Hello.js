@@ -2,6 +2,7 @@
 
 const sequelize = require('../Helpers/Sequelize');
 const { formatAndReturn } = require('../Helpers/Functions');
+const jwt = require('jsonwebtoken');
 
 const ItemRepository = require('../Repositories/ItemRepository');
 const ItemModel = require('../Models/ItemModel');
@@ -60,4 +61,22 @@ module.exports.getItemTest2 = async (event, context) => {
     const itemData = await itemRepository.find(2);
   
     return formatAndReturn(200, itemData);
+};
+
+module.exports.authorized = async (event) => {
+  const token = event.headers.Authorization.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Perform authorized action here
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Authorized', body: decoded })
+    };
+  } catch (error) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify({ error: 'Unauthorized' })
+    };
+  }
 };
