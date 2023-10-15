@@ -16,6 +16,14 @@ class ItemService {
 
       return await this.itemRepository.favorite(user.id, itemID);
     }
+
+    async unfavorite(user, itemID) {
+      if (!await this.itemRepository.favorited(user.id, itemID)) {
+        return true;
+      }
+
+      return await this.itemRepository.unfavorite(user.id, itemID);
+    }
 }
 
 const itemService = new ItemService();

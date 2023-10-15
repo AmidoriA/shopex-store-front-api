@@ -160,6 +160,24 @@ functions:
           method: post
           cors: true
 
+  getFavoriteItems:
+    handler: Handlers/Item.getFavoriteItems
+    memorySize: 128
+    events:
+      - http:
+          path: items/favorite
+          method: get
+          cors: true
+
+  unfavoriteItem:
+    handler: Handlers/Item.unfavorite
+    memorySize: 128
+    events:
+      - http:
+          path: items/{itemID}/favorite
+          method: delete
+          cors: true
+
   hello:
     handler: Handlers/Hello.hello
     memorySize: 128
