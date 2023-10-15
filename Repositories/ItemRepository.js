@@ -26,6 +26,14 @@ class ItemRepository {
         });
         return item;
     }
+
+    async favorited(userID, itemID) {
+        return false;
+    }
+
+    async favorite(userID, itemID) {
+        return false;
+    }
 }
 
 const itemRepository = new ItemRepository(sequelize);
