@@ -151,6 +151,15 @@ functions:
           method: get
           cors: true
 
+  postFavoriteItem:
+    handler: Handlers/Item.favoriteItem
+    memorySize: 128
+    events:
+      - http:
+          path: items/{itemID}/favorite
+          method: post
+          cors: true
+
   hello:
     handler: Handlers/Hello.hello
     memorySize: 128

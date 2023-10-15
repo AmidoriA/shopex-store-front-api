@@ -1,17 +1,10 @@
 'use strict';
 
-const ItemRepository = require('../Repositories/ItemRepository');
-const ItemModel = require('../Models/ItemModel');
-const BundleModel = require('../Models/BundleModel');
-const BundleItemModel = require('../Models/BundleItemModel');
+const itemRepository = require('../Repositories/ItemRepository');
+const itemService = require('../Services/ItemService');
 
 const sequelize = require('../Helpers/Sequelize');
 const { formatAndReturn } = require('../Helpers/Functions');
-
-const Item = ItemModel(sequelize);
-const Bundle = BundleModel(sequelize);
-const BundleItem = BundleItemModel(sequelize);
-const itemRepository = new ItemRepository(Item, Bundle, BundleItem);
 
 module.exports.getItem = async (event, context) => {
   const itemID = event.pathParameters.itemID;
@@ -27,4 +20,9 @@ module.exports.getItemFull = async (event, context) => {
   return formatAndReturn(200, itemData);
 };
 
+module.exports.favoriteItem = async (event, context) => {
+  const itemID = event.pathParameters.itemID;
+
+  return formatAndReturn(200, []);
+};
 

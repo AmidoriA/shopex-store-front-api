@@ -1,9 +1,14 @@
-const ItemRepository = require('../Repositories/ItemRepository');
+const itemRepository = require('../Repositories/ItemRepository');
 
 class ItemService {
-    static async getItem(itemID) {
-      return await ItemRepository.getItem(itemID);
+    constructor() {
+      this.itemRepository = itemRepository;
+    }
+
+    async getItem(itemID) {
+      return await this.itemRepository.find(itemID);
     }
 }
-  
-module.exports = ItemService;
+
+const itemService = new ItemService();
+module.exports = itemService;

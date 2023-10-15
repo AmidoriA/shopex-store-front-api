@@ -1,8 +1,14 @@
+const ItemModel = require('../Models/ItemModel');
+const BundleModel = require('../Models/BundleModel');
+const BundleItemModel = require('../Models/BundleItemModel');
+
+const sequelize = require('../Helpers/Sequelize');
+
 class ItemRepository {
-    constructor(ItemModel, BundleModel, BundleItemModel) {
-        this.Item = ItemModel;
-        this.Bundle = BundleModel;
-        this.BundleItem = BundleItemModel;
+    constructor(sequelize) {
+        this.Item = ItemModel(sequelize);
+        this.Bundle = BundleModel(sequelize);
+        this.BundleItem = BundleItemModel(sequelize);
 
         this.Item.belongsToMany(this.Bundle, { through: this.BundleItem,
             underscored: true });
@@ -21,5 +27,6 @@ class ItemRepository {
         return item;
     }
 }
-  
-module.exports = ItemRepository;
+
+const itemRepository = new ItemRepository(sequelize);
+module.exports = itemRepository;
